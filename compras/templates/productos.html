@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block contain %}
+
+	<div class="col-md-7">
+	  <div class="content-panel">
+		  	  <h4><i class="fa fa-angle-right"></i> Productos</h4>
+		  	  <hr>
+	      	<table class="table table-hover">
+	          <thead>
+	          <tr>
+	              <th>#</th>
+	              <th>nombre</th>
+	              <th>precio</th>
+	              <th>descripcion</th>                      
+	          </tr>
+	          </thead>
+	          <tbody>
+	          	{% for producto in productos %}
+	          		<tr>
+					  <td>{{producto.id}}</td>
+					  <td>{{producto.producto}}</td>
+					  <td>{{producto.precio}}</td>
+					  <td>{{producto.descripcion}}</td>
+					</tr>
+	          	{% endfor %}
+	          </tbody>
+	      	</table>
+		</div>
+	</div><!-- /col-md-7 -->
+
+	<! -- MODALS -->
+	<div class="col-md-5">
+		<div class="content-panel">
+			<button class="btn btn-success btn-lg" data-toggle="modal" data-target="#registroProducto">registrar producto</button>
+		</div>
+	
+	<!-- Modal -->
+		<div class="modal fade" id="registroProducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+	        <form method="POST" class="form-horizontal style-form" action="{% url 'productos' %}">
+
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Registro de productos</h4>
+		      </div>
+
+		      <div class="modal-body">
+		       
+		        	{% csrf_token %}
+		            {{ productosForm|crispy }}
+		           
+		      </div>
+
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+		        <button type="submit" class="btn btn-primary">Guardar</button>
+		      </div>
+
+	        </form>
+		    </div>
+		  </div>
+		</div>
+	<!-- Modal -->      				
+	</div><!-- /col-md-5 -->
+
+{% endblock %}
